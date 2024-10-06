@@ -1,0 +1,26 @@
+[
+    {
+        "memberPayment": "Tobias",
+        "addressPayment": "0000005849959988949854",
+        "amount": 9500,
+		"description": "Asado"
+    },
+    {
+        "memberPayment": "Maxi",
+        "addressPayment": "0000005848759988949854",
+        "amount": 5000,
+		"description": "Futbol 5"
+    },
+	{
+        "memberPayment": "Giselle",
+        "addressPayment": "0000005874959988949854",
+        "amount": 5700,
+		"description": "Nafta"
+    },
+	{
+        "memberPayment": "Manuel",
+        "addressPayment": "0000005849959988947454",
+        "amount": 8300,
+		"description": "Nafta"
+    }
+]
