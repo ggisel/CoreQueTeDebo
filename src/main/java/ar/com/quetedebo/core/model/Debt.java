@@ -1,4 +1,4 @@
-package ar.com.quetedebo.core;
+package ar.com.quetedebo.core.model;
 
 public class Debt {
 	private String memberPayment;
