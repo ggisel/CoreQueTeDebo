@@ -7,26 +7,52 @@ import java.util.Observable;
 
 public class QueTeDebo extends Observable {
 	private DataLoader dataLoader = new DataLoader();
-	private PayDebts payDebts;
+	private List<Debt> debts;
+	private PayDebts payDebts = new PayDebts();
 
 	public QueTeDebo() {
-		this.payDebts = new PayDebts();
+		loadDebts();
 	}
 
 	public void pay(List<Debt> debts) {
 		String metodo = this.payDebts.pay(debts);
+		
+		for (Debt debt: debts) {			
+			if (!this.debts.remove(debt)) {
+				//throw new Exception("Tried to pay unexisting debt: "+debt);
+			}
+			System.out.println("Paid " + debt);
+		}
+		
 		setChanged();
         notifyObservers(metodo);
 	}
 
+	public void addDebt(Debt debt) {
+		debts.add(debt);
+		setChanged();
+		notifyObservers("add");
+	}
+	
+	public void removeDebt(Debt debt) {
+		debts.remove(debt);
+		setChanged();
+		notifyObservers("remove");
+	}
+	
 	public List<Debt> getDebts() {
-		List<Debt> debts = new ArrayList<>();
+		List<Debt> newDebts =  new ArrayList<Debt>();
+		debts.forEach(debt -> newDebts.add(new Debt(debt)));
+		return newDebts;
+	}
+	
+	public void loadDebts() {
+		debts = new ArrayList<>();
 		try {
-			debts = this.dataLoader.loadDataFromJson(Debt.class);
+			debts = dataLoader.loadDataFromJson(Debt.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return debts;
 	}
 	
 }

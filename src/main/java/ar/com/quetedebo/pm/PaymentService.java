@@ -1,5 +1,10 @@
 package ar.com.quetedebo.pm;
 
-public class PaymentService {
+import ar.com.quetedebo.core.Debt;
 
+public class PaymentService {
+    private PaymentMethodFactory paymentMethodFactory;
+    private PaymentMethodDiscovery paymentMethodDiscovery;
+
+  
 }
