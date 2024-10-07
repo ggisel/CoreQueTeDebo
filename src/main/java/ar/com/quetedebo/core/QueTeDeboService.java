@@ -2,16 +2,19 @@ package ar.com.quetedebo.core;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import ar.com.quetedebo.core.model.Debt;
+import ar.com.quetedebo.factory.DataLoader;
+import ar.com.quetedebo.factory.QueTeDeboFactory;
 import ar.com.quetedebo.pm.PaymentMethod;
-import ar.com.quetedebo.pm.PaymentMethodFactory;
 
 public class QueTeDeboService {
-	PaymentMethodFactory paymentMethodFactory = new PaymentMethodFactory();
+	private QueTeDeboFactory paymentMethodFactory = new QueTeDeboFactory();
+	private DataLoader dataLoader = new DataLoader();
 	
 	public String processPay(List<Debt> debts) {
 		String metodo = "";
@@ -42,5 +45,16 @@ public class QueTeDeboService {
 		}
 		
 		return metodo;
+	}
+	
+	public List<Debt> loadDebts() {
+		List<Debt> debts = new ArrayList<>();
+		try {
+			debts = dataLoader.loadDataFromJson(Debt.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return debts;
 	}
 }

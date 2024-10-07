@@ -1,6 +1,5 @@
 package ar.com.quetedebo.core;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -8,12 +7,11 @@ import java.util.Observable;
 import ar.com.quetedebo.core.model.Debt;
 
 public class QueTeDebo extends Observable {
-	private DataLoader dataLoader = new DataLoader();
 	private List<Debt> debts;
 	private QueTeDeboService queTeDeboService = new QueTeDeboService();
 
 	public QueTeDebo() {
-		loadDebts();
+		this.debts = this.queTeDeboService.loadDebts();
 	}
 
 	public void pay(List<Debt> debts) {
@@ -46,15 +44,6 @@ public class QueTeDebo extends Observable {
 		List<Debt> newDebts =  new ArrayList<Debt>();
 		debts.forEach(debt -> newDebts.add(new Debt(debt)));
 		return newDebts;
-	}
-	
-	public void loadDebts() {
-		debts = new ArrayList<>();
-		try {
-			debts = dataLoader.loadDataFromJson(Debt.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 }
