@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import ar.com.quetedebo.core.config.Config;
 import ar.com.quetedebo.core.model.Debt;
 import ar.com.quetedebo.factory.DataLoader;
 import ar.com.quetedebo.factory.QueTeDeboFactory;
@@ -14,7 +15,7 @@ import ar.com.quetedebo.pm.PaymentMethod;
 
 public class QueTeDeboService {
 	private QueTeDeboFactory paymentMethodFactory = new QueTeDeboFactory();
-	private DataLoader dataLoader = new DataLoader();
+	private DataLoader dataLoader = new DataLoader(Config.DATA_LOADER);
 	
 	public String processPay(List<Debt> debts) {
 		String metodo = "";
