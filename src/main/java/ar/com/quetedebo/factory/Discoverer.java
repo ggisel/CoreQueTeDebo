@@ -12,13 +12,13 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class Discoverer<T> {
-	File directoryJars;
+	private File directoryJars;
 	
 	public Discoverer(String path) {
 		directoryJars = new File(path);
     }
 
-	public Set<T> loadImplementation(Class<T> classInterface) throws IOException, IllegalArgumentException, InvocationTargetException {
+	public Set<T> buildExtension(Class<T> classInterface) throws IOException, IllegalArgumentException, InvocationTargetException {
 		Set<T> resultImplementations = new HashSet<>();
 		
 		File[] files = directoryJars.listFiles();

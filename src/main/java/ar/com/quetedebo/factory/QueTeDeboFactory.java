@@ -15,6 +15,6 @@ public class QueTeDeboFactory {
 	}
 	
 	public Set<PaymentMethod> getPaymentsMethods() throws IllegalArgumentException, InvocationTargetException, IOException {
-		return discoverer.loadImplementation(PaymentMethod.class);
+		return discoverer.buildExtension(PaymentMethod.class);
 	}
 }
