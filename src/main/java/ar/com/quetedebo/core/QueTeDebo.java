@@ -14,9 +14,9 @@ public class QueTeDebo extends Observable {
 	}
 
 	public void pay(List<Debt> debts) {
-		this.payDebts.pay(debts);
+		String metodo = this.payDebts.pay(debts);
 		setChanged();
-        notifyObservers("pay");
+        notifyObservers(metodo);
 	}
 
 	public List<Debt> getDebts() {
