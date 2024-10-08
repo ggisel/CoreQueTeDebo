@@ -13,11 +13,11 @@ import ar.com.quetedebo.factory.QueTeDeboFactory;
 import ar.com.quetedebo.pm.PaymentMethod;
 
 public class QueTeDeboService {
-	private QueTeDeboFactory paymentMethodFactory = new QueTeDeboFactory();
 	private DataLoader dataLoader = new DataLoader(Config.DATA_LOADER);
 	private Set<PaymentMethod> paymentsMethods;
 	
 	public QueTeDeboService() {
+		QueTeDeboFactory paymentMethodFactory = new QueTeDeboFactory();
 		paymentsMethods = (Set<PaymentMethod>) paymentMethodFactory.getPaymentsMethods();
 	}
 	
