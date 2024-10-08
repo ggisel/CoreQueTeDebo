@@ -14,7 +14,21 @@ public class QueTeDeboFactory {
 		discoverer = new Discoverer<PaymentMethod>(Config.EXTENSIONS);
 	}
 	
-	public Set<PaymentMethod> getPaymentsMethods() throws IllegalArgumentException, InvocationTargetException, IOException {
-		return discoverer.buildExtension(PaymentMethod.class);
+	public Set<PaymentMethod> getPaymentsMethods()  {
+		Set<PaymentMethod> payments = null;
+		try {
+			payments = discoverer.buildExtension(PaymentMethod.class);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return payments;
 	}
 }
