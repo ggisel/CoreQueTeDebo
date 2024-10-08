@@ -1,6 +1,5 @@
 package ar.com.quetedebo.core;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -11,21 +10,16 @@ public class QueTeDebo extends Observable {
 	private QueTeDeboService queTeDeboService = new QueTeDeboService();
 
 	public QueTeDebo() {
-		this.debts = this.queTeDeboService.loadDebts();
+		this.debts = queTeDeboService.loadDebts();
 	}
 
-	public void pay(List<Debt> debts) {
-		String metodo = this.queTeDeboService.processPay(debts);
+	public void pay() {
+		String paymentMethod = queTeDeboService.processPay(debts);
 		
-		for (Debt debt: debts) {			
-			if (!this.debts.remove(debt)) {
-				//throw new Exception("Tried to pay unexisting debt: "+debt);
-			}
-			System.out.println("Paid " + debt);
-		}
+		debts.clear();
 		
 		setChanged();
-        notifyObservers(metodo);
+        notifyObservers(paymentMethod);
 	}
 
 	public void addDebt(Debt debt) {
@@ -41,9 +35,7 @@ public class QueTeDebo extends Observable {
 	}
 	
 	public List<Debt> getDebts() {
-		List<Debt> newDebts =  new ArrayList<Debt>();
-		debts.forEach(debt -> newDebts.add(new Debt(debt)));
-		return newDebts;
+		return debts;
 	}
 	
 }

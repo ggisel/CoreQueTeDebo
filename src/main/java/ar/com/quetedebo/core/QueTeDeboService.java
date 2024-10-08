@@ -9,7 +9,7 @@ import java.util.Set;
 import ar.com.quetedebo.core.config.Config;
 import ar.com.quetedebo.core.model.Debt;
 import ar.com.quetedebo.factory.DataLoader;
-import ar.com.quetedebo.factory.QueTeDeboFactory;
+import ar.com.quetedebo.factory.PaymentMethodFactory;
 import ar.com.quetedebo.pm.PaymentMethod;
 
 public class QueTeDeboService {
@@ -17,7 +17,7 @@ public class QueTeDeboService {
 	private Set<PaymentMethod> paymentsMethods;
 	
 	public QueTeDeboService() {
-		QueTeDeboFactory paymentMethodFactory = new QueTeDeboFactory();
+		PaymentMethodFactory paymentMethodFactory = new PaymentMethodFactory();
 		paymentsMethods = (Set<PaymentMethod>) paymentMethodFactory.getPaymentsMethods();
 	}
 	

@@ -7,10 +7,10 @@ import java.util.Set;
 import ar.com.quetedebo.core.config.Config;
 import ar.com.quetedebo.pm.PaymentMethod;
 
-public class QueTeDeboFactory {
+public class PaymentMethodFactory {
 	Discoverer<PaymentMethod> discoverer;
 	
-	public QueTeDeboFactory() {
+	public PaymentMethodFactory() {
 		discoverer = new Discoverer<PaymentMethod>(Config.EXTENSIONS);
 	}
 	
