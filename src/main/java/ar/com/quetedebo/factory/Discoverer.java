@@ -18,26 +18,30 @@ public class Discoverer<T> {
 		directoryJars = new File(path);
     }
 
-	public Set<T> buildExtension(Class<T> classInterface) throws IOException, IllegalArgumentException, InvocationTargetException {
-		Set<T> resultImplementations = new HashSet<>();
+	public T buildExtension(Class<T> classInterface) {
+		T resultImplementation = null;
 		
 		File[] files = directoryJars.listFiles();
 		
 		for(File fileJar : files) {
-	        findInJar(classInterface, fileJar, resultImplementations);
+	        try {
+				findInJar(classInterface, fileJar, resultImplementation);
+			} catch (InvocationTargetException | IOException e) {
+				e.printStackTrace();
+			}
 		}
 
-		return resultImplementations;
+		return resultImplementation;
 	}
 	
-	private void findInJar(Class<T> classInterface, File fileJar, Set<T> resultImplementations) throws IOException, InvocationTargetException {
+	private void findInJar(Class<T> classInterface, File fileJar, T resultImplementation) throws IOException, InvocationTargetException {
 		JarFile jarFile = new JarFile(fileJar);
         Enumeration<JarEntry> entries = jarFile.entries();
 		
         URL[] urls = { new URL("jar:file:" + fileJar+"!/") };
         URLClassLoader classLoader = new URLClassLoader(urls);
 
-        while (entries.hasMoreElements()) {
+        while (entries.hasMoreElements() && resultImplementation == null) {
             JarEntry entry = entries.nextElement();
 
             if (entry.getName().endsWith(".class")) {
@@ -47,7 +51,7 @@ public class Discoverer<T> {
                     Class<?> cls = classLoader.loadClass(className);
 
                     if(cls != null && !cls.isInterface() && classInterface.isAssignableFrom(cls)) {
-                    	resultImplementations.add((T) cls.getDeclaredConstructor().newInstance());
+                    	resultImplementation = (T) cls.getDeclaredConstructor().newInstance();
         			}
 
                 } catch (ClassNotFoundException e) {
