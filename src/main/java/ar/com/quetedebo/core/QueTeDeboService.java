@@ -1,7 +1,6 @@
 package ar.com.quetedebo.core;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +46,7 @@ public class QueTeDeboService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return debts;
 	}
 }
