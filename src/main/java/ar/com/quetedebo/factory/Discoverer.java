@@ -6,8 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -25,21 +23,27 @@ public class Discoverer<T> {
 		
 		for(File fileJar : files) {
 	        try {
-				findInJar(classInterface, fileJar, resultImplementation);
+	        	resultImplementation = findInJar(classInterface, fileJar);
 			} catch (InvocationTargetException | IOException e) {
 				e.printStackTrace();
 			}
 		}
 
+		if (resultImplementation == null) {
+	        throw new IllegalStateException("No implementation found for interface: " + classInterface.getName());
+	    }
+
 		return resultImplementation;
 	}
 	
-	private void findInJar(Class<T> classInterface, File fileJar, T resultImplementation) throws IOException, InvocationTargetException {
+	private T findInJar(Class<T> classInterface, File fileJar) throws IOException, InvocationTargetException {
 		JarFile jarFile = new JarFile(fileJar);
         Enumeration<JarEntry> entries = jarFile.entries();
 		
         URL[] urls = { new URL("jar:file:" + fileJar+"!/") };
         URLClassLoader classLoader = new URLClassLoader(urls);
+        
+        T resultImplementation = null;
 
         while (entries.hasMoreElements() && resultImplementation == null) {
             JarEntry entry = entries.nextElement();
@@ -64,5 +68,7 @@ public class Discoverer<T> {
 
         jarFile.close();
         classLoader.close();
+        
+        return resultImplementation;
 	}
 }

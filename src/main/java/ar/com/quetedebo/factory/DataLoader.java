@@ -8,16 +8,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DataLoader {
 	private final ObjectMapper objectMapper = new ObjectMapper();
-	File directoryLoader;
+	File file;
 	
 	public DataLoader(String path) {
-		directoryLoader = new File(path);
+		file = new File(path);
     }
 
 	public <T> List<T> loadDataFromJson(Class<T> clazz) throws IOException {
-		String fileName = directoryLoader + File.separator + clazz.getSimpleName() + ".json";
-
-		return objectMapper.readValue(new File(fileName),
-				objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
+		return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
 	}
 }
