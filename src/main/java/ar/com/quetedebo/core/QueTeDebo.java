@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import ar.com.quetedebo.core.model.Debt;
 import ar.com.quetedebo.factory.DataLoader;
 import ar.com.quetedebo.factory.PaymentMethodFactory;
 import ar.com.quetedebo.pm.PaymentMethod;
 
-@SuppressWarnings("deprecation")
 public class QueTeDebo extends Observable {
 	private List<Debt> debts;
 	private Payer payer = new Payer();

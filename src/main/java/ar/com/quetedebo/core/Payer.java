@@ -2,7 +2,6 @@ package ar.com.quetedebo.core;
 
 import java.util.List;
 
-import ar.com.quetedebo.core.model.Debt;
 import ar.com.quetedebo.pm.PaymentMethod;
 
 public class Payer {
