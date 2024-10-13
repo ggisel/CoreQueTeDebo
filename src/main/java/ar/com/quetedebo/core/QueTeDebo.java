@@ -6,21 +6,17 @@ import java.util.List;
 import java.util.Observable;
 
 import ar.com.quetedebo.factory.DataLoader;
-import ar.com.quetedebo.factory.PaymentMethodFactory;
-import ar.com.quetedebo.pm.PaymentMethod;
 
 public class QueTeDebo extends Observable {
 	private List<Debt> debts;
-	private Payer payer = new Payer();
-	private PaymentMethod paymentMethod;
+	private final Payer payer;
 
 	public QueTeDebo(String extensionsPath, String dataPath) {
 		this.debts = loadDebts(dataPath);
-		PaymentMethodFactory paymentMethodFactory = new PaymentMethodFactory(extensionsPath);
-		paymentMethod = paymentMethodFactory.getPaymentMethod();
+		payer = new Payer(extensionsPath);
 	}
 
-	public void pay() {
+	public void pay(String paymentMethod) {
 		String paymentMethodName = payer.processPayments(debts, paymentMethod);
 		
 		debts.clear();
