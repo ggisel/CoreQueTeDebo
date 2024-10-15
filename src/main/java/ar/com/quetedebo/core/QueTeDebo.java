@@ -11,9 +11,9 @@ public class QueTeDebo extends Observable {
 	private List<Debt> debts;
 	private final Payer payer;
 
-	public QueTeDebo(String extensionsPath, String dataPath) {
+	public QueTeDebo(String extensionsPath, String dataPath, String storageType) {
 		this.debts = loadDebts(dataPath);
-		payer = new Payer(extensionsPath);
+		payer = new Payer(extensionsPath,storageType);
 	}
 
 	public void pay(String paymentMethod) {
