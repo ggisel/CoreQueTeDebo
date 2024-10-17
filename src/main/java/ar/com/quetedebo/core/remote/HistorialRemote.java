@@ -6,7 +6,7 @@ import java.util.List;
 
 import ar.com.quetedebo.core.Debt;
 
-public interface HistorialRemoteService extends Remote {
+public interface HistorialRemote extends Remote {
 
 	void addObserverRemote(ObserverRemote observerRemote) throws RemoteException;
 
