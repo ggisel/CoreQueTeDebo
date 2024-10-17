@@ -11,18 +11,17 @@ public class QueTeDebo extends Observable {
 	private List<Debt> debts;
 	private final Payer payer;
 
-	public QueTeDebo(String extensionsPath, String dataPath, String storageType) {
+	public QueTeDebo(String extensionsPath, String dataPath) {
 		this.debts = loadDebts(dataPath);
-		payer = new Payer(extensionsPath,storageType);
+		payer = new Payer(extensionsPath);
 	}
 
-	public void pay(String paymentMethod) {
+	public void payRequest(String paymentMethod) {
+		List<Debt> porPagar=debts; //TODO
 		String paymentMethodName = payer.processPayments(debts, paymentMethod);
-		
-		debts.clear();
-		
+
 		setChanged();
-        notifyObservers(paymentMethodName);
+        notifyObservers(porPagar);
 	}
 
 	public void addDebt(Debt debt) {
