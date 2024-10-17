@@ -1,19 +1,40 @@
 package ar.com.quetedebo.core;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import ar.com.quetedebo.core.remote.HistorialRemoteService;
+import ar.com.quetedebo.core.remote.HistorialRemoteServiceImpl;
 import ar.com.quetedebo.factory.DataLoader;
 
 public class QueTeDebo extends Observable {
 	private List<Debt> debts;
-	private final Payer payer;
+	private Payer payer;
+	private HistorialRemoteService historialRemoteService;
 
 	public QueTeDebo(String extensionsPath, String dataPath) {
-		this.debts = loadDebts(dataPath);
-		payer = new Payer(extensionsPath);
+		try {
+			this.debts = loadDebts(dataPath);
+			payer = new Payer(extensionsPath);
+			historialRemoteService = new HistorialRemoteServiceImpl();
+
+	        Registry registry;
+			registry = LocateRegistry.createRegistry(1099);
+			registry.rebind("HistorialRemoteService", historialRemoteService);
+	        System.out.println("Servidor Core listo.");
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+        
+	}
+	
+	public List<String> getPaymentsMethod() {
+		return payer.getPaymentMethods();
 	}
 
 	public void payRequest(String paymentMethod) {
@@ -21,7 +42,14 @@ public class QueTeDebo extends Observable {
 		String paymentMethodName = payer.processPayments(debts, paymentMethod);
 
 		setChanged();
-        notifyObservers(porPagar);
+        notifyObservers(paymentMethodName);
+        
+        // Notificación remota
+        try {
+			historialRemoteService.notifyObserverRemote(debts);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addDebt(Debt debt) {

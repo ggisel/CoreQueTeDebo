@@ -1,6 +1,9 @@
 package ar.com.quetedebo.core;
 
-public class Debt {
+import java.io.Serializable;
+
+public class Debt implements Serializable {
+	private static final long serialVersionUID = -1972263900940025021L;
 	private String memberPayment;
 	private String addressPayment;
 	private Float amount;
