@@ -43,6 +43,8 @@ public class QueTeDebo extends Observable {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+        
+        debts.clear();
 	}
 
 	public void addDebt(Debt debt) {
@@ -72,4 +74,5 @@ public class QueTeDebo extends Observable {
 
 		return debts;
 	}
+	
 }
