@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Observable;
 
 import ar.com.quetedebo.core.remote.HistorialRemoteServer;
-import ar.com.quetedebo.factory.DataLoader;
 
 public class QueTeDebo extends Observable {
 	private List<Debt> debts;
@@ -31,7 +30,6 @@ public class QueTeDebo extends Observable {
 	}
 
 	public void payRequest(String paymentMethod) {
-		List<Debt> porPagar=debts; //TODO
 		String paymentMethodName = payer.processPayments(debts, paymentMethod);
 
 		setChanged();
@@ -44,6 +42,7 @@ public class QueTeDebo extends Observable {
 			e.printStackTrace();
 		}
         
+        // FIXME ver como podemos limpiar las deudas
         debts.clear();
 	}
 

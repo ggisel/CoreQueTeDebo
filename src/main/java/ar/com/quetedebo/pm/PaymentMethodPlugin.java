@@ -1,6 +1,6 @@
 package ar.com.quetedebo.pm;
 
-public interface PaymentMethod {
+public interface PaymentMethodPlugin {
 	public String processPayment(String address, Float amount);
 	public String getName();
 }

@@ -1,4 +1,4 @@
-package ar.com.quetedebo.factory;
+package ar.com.quetedebo.core;
 
 import java.io.File;
 import java.io.IOException;
