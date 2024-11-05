@@ -11,9 +11,9 @@ public class Payer {
 	private Map<String, PaymentMethodPlugin> paymentMethods;
 	private PaymentMethodFactory paymentMethodFactory;
 
-	public Payer(String extensionsPath) {
-		paymentMethodFactory = new PaymentMethodFactory(extensionsPath);
-		paymentMethods = paymentMethodFactory.createPaymentMethods();
+	public Payer(String extensionsPath,Map<String, PaymentMethodPlugin> paymentMethods) {
+		this.paymentMethodFactory = new PaymentMethodFactory(extensionsPath);
+		this.paymentMethods = paymentMethods;
 	}
 
 	public String payDebtsWithPayment(List<Debt> debts, String methodName) {

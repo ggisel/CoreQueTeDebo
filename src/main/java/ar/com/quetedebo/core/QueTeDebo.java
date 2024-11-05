@@ -15,7 +15,8 @@ public class QueTeDebo extends Observable {
 
 	public QueTeDebo(String extensionsPath, String dataPath) {
 		this.debts = loadDebts(dataPath);
-		payer = new Payer(extensionsPath);
+		Discoverer discoverer=new Discoverer<>(extensionsPath);
+		payer = new Payer(extensionsPath,discoverer.getPaymentMethods());
 		try {
 			historialRemoteService = new HistorialRemoteServer();
 			

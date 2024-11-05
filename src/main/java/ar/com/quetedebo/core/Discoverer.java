@@ -75,4 +75,16 @@ public class Discoverer<T> {
 
 		return resultImplementations;
 	}
+
+	public Map<String, PaymentMethodPlugin> getPaymentMethods(){
+		Map<String, PaymentMethodPlugin> paymentMethods = new HashMap<>();
+		List<PaymentMethodPlugin> paymentMethodPlugins = this.buildExtensions(PaymentMethodPlugin.class);
+		
+		for (PaymentMethodPlugin paymentMethodPlugin : paymentMethodPlugins) {
+            String methodName = paymentMethodPlugin.getName();
+            paymentMethods.put(methodName, paymentMethodPlugin);
+        }
+		
+		return paymentMethods;
+	}
 }
