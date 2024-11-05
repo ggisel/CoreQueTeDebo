@@ -25,12 +25,12 @@ public class QueTeDebo extends Observable {
         
 	}
 	
-	public List<String> getPaymentsMethod() {
+	public List<String> getPaymentsMethods() {
 		return payer.getPaymentMethods();
 	}
 
 	public void payRequest(String paymentMethod) {
-		String paymentMethodName = payer.processPayments(debts, paymentMethod);
+		String paymentMethodName = payer.payDebtsWithPayment(debts, paymentMethod);
 
 		setChanged();
         notifyObservers(paymentMethodName);

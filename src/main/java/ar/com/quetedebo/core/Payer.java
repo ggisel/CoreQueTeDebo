@@ -1,29 +1,34 @@
 package ar.com.quetedebo.core;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ar.com.quetedebo.pm.PaymentMethodPlugin;
-import ar.com.quetedebo.pm.PaymentMethodRegistry;
+import ar.com.quetedebo.pm.PaymentMethodFactory;
 
 public class Payer {
+	private Map<String, PaymentMethodPlugin> paymentMethods;
+	private PaymentMethodFactory paymentMethodFactory;
 
 	public Payer(String extensionsPath) {
-		PaymentMethodRegistry.loadPaymentMethods(extensionsPath);
+		paymentMethodFactory = new PaymentMethodFactory(extensionsPath);
+		paymentMethods = paymentMethodFactory.createPaymentMethods();
 	}
 
-	public String processPayments(List<Debt> debts, String methodName) {
+	public String payDebtsWithPayment(List<Debt> debts, String methodName) {
 		String paymentMethodName = "";
-		PaymentMethodPlugin paymentMethod = PaymentMethodRegistry.get(methodName);
+		PaymentMethodPlugin paymentMethod = paymentMethods.get(methodName);
 
-		for(Debt debt : debts) {
+		for (Debt debt : debts) {
 			paymentMethodName = paymentMethod.processPayment(debt.getAddressPayment(), debt.getAmount());
 		}
 
 		return paymentMethodName;
 	}
-	
+
 	public List<String> getPaymentMethods() {
-		List<String> paymentMethodsSelectors = PaymentMethodRegistry.getAllMethodNames();
+		List<String> paymentMethodsSelectors = new ArrayList<>(paymentMethods.keySet());
 		return paymentMethodsSelectors;
 	}
 
