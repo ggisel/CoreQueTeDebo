@@ -8,28 +8,18 @@ import ar.com.quetedebo.pm.PaymentMethodPlugin;
 import ar.com.quetedebo.pm.PaymentMethodFactory;
 
 public class Payer {
-	private Map<String, PaymentMethodPlugin> paymentMethods;
-	private PaymentMethodFactory paymentMethodFactory;
 
-	public Payer(String extensionsPath,Map<String, PaymentMethodPlugin> paymentMethods) {
-		this.paymentMethodFactory = new PaymentMethodFactory(extensionsPath);
-		this.paymentMethods = paymentMethods;
+	public Payer(String extensionsPath) {
 	}
 
-	public String payDebtsWithPayment(List<Debt> debts, String methodName) {
+	public String payDebtsWithPayment(List<Debt> debts, PaymentMethodPlugin paymentMethod) {
 		String paymentMethodName = "";
-		PaymentMethodPlugin paymentMethod = paymentMethods.get(methodName);
 
 		for (Debt debt : debts) {
 			paymentMethodName = paymentMethod.processPayment(debt.getAddressPayment(), debt.getAmount());
 		}
 
 		return paymentMethodName;
-	}
-
-	public List<String> getPaymentMethods() {
-		List<String> paymentMethodsSelectors = new ArrayList<>(paymentMethods.keySet());
-		return paymentMethodsSelectors;
 	}
 
 }

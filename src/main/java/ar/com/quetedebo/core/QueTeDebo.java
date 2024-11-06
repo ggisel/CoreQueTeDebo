@@ -4,18 +4,23 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 
 import ar.com.quetedebo.core.remote.HistorialRemoteServer;
+import ar.com.quetedebo.pm.PaymentMethodFactory;
+import ar.com.quetedebo.pm.PaymentMethodPlugin;
 
 public class QueTeDebo extends Observable {
 	private List<Debt> debts;
+	private Map<String, PaymentMethodPlugin> paymentMethods;
 	private Payer payer;
 	private HistorialRemoteServer historialRemoteService;
 
 	public QueTeDebo(String extensionsPath, String dataPath) {
 		this.debts = loadDebts(dataPath);
-		payer = new Payer(extensionsPath,getDiscovererPaymentMethods(extensionsPath));
+		this.paymentMethods= getCreatedPaymentMethods(extensionsPath);
+		this.payer = new Payer(extensionsPath);
 		try {
 			historialRemoteService = new HistorialRemoteServer();
 			
@@ -24,13 +29,13 @@ public class QueTeDebo extends Observable {
 		}
         
 	}
-	
+
 	public List<String> getPaymentsMethods() {
-		return payer.getPaymentMethods();
+        return new ArrayList<>(paymentMethods.keySet());
 	}
 
 	public void payRequest(String paymentMethod) {
-		String paymentMethodName = payer.payDebtsWithPayment(debts, paymentMethod);
+		String paymentMethodName = payer.payDebtsWithPayment(debts, this.paymentMethods.get(paymentMethod));
 
 		setChanged();
         notifyObservers(paymentMethodName);
@@ -74,8 +79,7 @@ public class QueTeDebo extends Observable {
 		return debts;
 	}
 
-	private Map<String, PaymentMethodPlugin> getDiscovererPaymentMethods(String extensionsPath){
-		return new Discoverer<>(extensionsPath).getPaymentMethods();
+	private static Map<String, PaymentMethodPlugin> getCreatedPaymentMethods(String extensionsPath) {
+		return new PaymentMethodFactory(extensionsPath).createPaymentMethods();
 	}
-	
 }
