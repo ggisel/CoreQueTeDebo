@@ -8,7 +8,7 @@ import ar.com.quetedebo.core.Discoverer;
 
 public class PaymentMethodFactory {
 	
-	private Discoverer<PaymentMethodPlugin> discoverer;
+	private final Discoverer<PaymentMethodPlugin> discoverer;
 
 	public PaymentMethodFactory(String extensionsPath) {
 		discoverer = new Discoverer<>(extensionsPath);
