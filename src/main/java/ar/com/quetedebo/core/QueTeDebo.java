@@ -1,13 +1,11 @@
 package ar.com.quetedebo.core;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import ar.com.quetedebo.core.remote.HistorialRemoteServer;
 import ar.com.quetedebo.pm.PaymentMethodFactory;
 import ar.com.quetedebo.pm.PaymentMethodPlugin;
 
@@ -15,19 +13,11 @@ public class QueTeDebo extends Observable {
 	private List<Debt> debts;
 	private Map<String, PaymentMethodPlugin> paymentMethods;
 	private Payer payer;
-	private HistorialRemoteServer historialRemoteService;
 
 	public QueTeDebo(String extensionsPath, String dataPath) {
 		this.debts = loadDebts(dataPath);
 		this.paymentMethods= getCreatedPaymentMethods(extensionsPath);
 		this.payer = new Payer(extensionsPath);
-		try {
-			historialRemoteService = new HistorialRemoteServer();
-			
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-        
 	}
 
 	public List<String> getPaymentsMethods() {
@@ -39,13 +29,6 @@ public class QueTeDebo extends Observable {
 
 		setChanged();
         notifyObservers(paymentMethodName);
-        
-        // Notificación remota
-        try {
-			historialRemoteService.notifyObserverRemote(debts);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
         
         // FIXME ver como podemos limpiar las deudas
         debts.clear();
