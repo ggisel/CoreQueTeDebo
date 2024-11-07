@@ -1,11 +1,8 @@
 package ar.com.quetedebo.core;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import ar.com.quetedebo.pm.PaymentMethodPlugin;
-import ar.com.quetedebo.pm.PaymentMethodFactory;
 
 public class Payer {
 
