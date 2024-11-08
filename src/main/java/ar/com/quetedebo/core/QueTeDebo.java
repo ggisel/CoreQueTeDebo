@@ -29,8 +29,7 @@ public class QueTeDebo extends Observable {
 
 		setChanged();
         notifyObservers(paymentMethodName);
-        
-        // FIXME ver como podemos limpiar las deudas
+
         debts.clear();
 	}
 
@@ -38,12 +37,6 @@ public class QueTeDebo extends Observable {
 		debts.add(debt);
 		setChanged();
 		notifyObservers("add");
-	}
-	
-	public void removeDebt(Debt debt) {
-		debts.remove(debt);
-		setChanged();
-		notifyObservers("remove");
 	}
 	
 	public List<Debt> getDebts() {
