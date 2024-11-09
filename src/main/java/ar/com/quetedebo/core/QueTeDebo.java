@@ -26,17 +26,18 @@ public class QueTeDebo extends Observable {
 
 	public void payRequest(String paymentMethod) {
 		String paymentMethodName = payer.payDebtsWithPayment(debts, this.paymentMethods.get(paymentMethod));
-
+		QueTeDeboDTO data = new QueTeDeboDTO("pay", new ArrayList<Debt>(debts), paymentMethodName);
 		setChanged();
-        notifyObservers(paymentMethodName);
+        notifyObservers(data);
 
         debts.clear();
 	}
 
 	public void addDebt(Debt debt) {
 		debts.add(debt);
+		QueTeDeboDTO data = new QueTeDeboDTO("add", new ArrayList<Debt>(debts));
 		setChanged();
-		notifyObservers("add");
+		notifyObservers(data);
 	}
 	
 	public List<Debt> getDebts() {
